@@ -90,7 +90,7 @@ const OIDCAuthenticationController = {
     try {
       user = await OIDCAuthenticationManager.promises.findOrCreateUser(profile, auditLog)
     } catch (error) {
-      logger.debug({ email : profile.emails[0].value }, `OIDC login failed: ${error}`)
+      logger.debug(`OIDC login failed: ${error}`)
       return {
         user: false,
         info: {
@@ -103,7 +103,7 @@ const OIDCAuthenticationController = {
     if (user) {
       return { user, info: undefined }
     } else { // user account is not created
-      logger.debug({ email : profile.emails[0].value }, 'OIDC JIT account creation is not allowed for this email')
+      logger.debug('OIDC JIT account creation is not allowed for this email')
       return {
         user: false,
         info: {
