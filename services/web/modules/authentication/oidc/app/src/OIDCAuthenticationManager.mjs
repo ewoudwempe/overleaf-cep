@@ -3,6 +3,7 @@ import UserCreator from '../../../../../app/src/Features/User/UserCreator.mjs'
 import ThirdPartyIdentityManager from '../../../../../app/src/Features/User/ThirdPartyIdentityManager.js'
 import { ParallelLoginError } from '../../../../../app/src/Features/Authentication/AuthenticationErrors.js'
 import { User } from '../../../../../app/src/models/User.js'
+import logger from '@overleaf/logger'
 
 const OIDCAuthenticationManager = {
   async findOrCreateUser(profile, auditLog) {
@@ -13,6 +14,7 @@ const OIDCAuthenticationManager = {
       updateUserDetailsOnLogin,
       providerId,
     } = Settings.oidc
+    logger.debug(profile)
     const email = profile.emails[0].value
     const oidcUserId = (attUserId === 'email') ? email : profile[attUserId]
     const firstName = profile.name?.givenName || ""
